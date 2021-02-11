@@ -159,37 +159,100 @@ namespace SCC_Trainer
         x64
     }
 
-    public class AddressObject
+    public class AddressObject<T>
     {
         public ulong address;
-        public float Value
+        public object Value
         {
             get
             {
-                Memory.ReadProcessMemory(Memory.handle, (IntPtr)address, buffer, 4, out intPtr);
-                return BitConverter.ToSingle(buffer);
+                Memory.ReadProcessMemory(Memory.handle, (IntPtr)address, buffer, size, out intPtr);
+                object t;
+
+                switch (type)
+                {
+                    case SupportedType.Float:
+                        t = BitConverter.ToSingle(buffer);
+                        break;
+                    case SupportedType.u16:
+                        t = BitConverter.ToUInt16(buffer);
+                        break;
+                    default:
+                        t = 0;
+                        break;
+                }
+
+                return t;
             }
 
             set
             {
-                buffer = BitConverter.GetBytes(value);
-                Memory.WriteProcessMemory(Memory.handle, (IntPtr)address, buffer, 4, out intPtr);
+                bool set = true;
+                switch (type)
+                {
+                    case SupportedType.Float:
+                        buffer = BitConverter.GetBytes((float)value); 
+                        break;
+                    case SupportedType.u16:
+                        buffer = BitConverter.GetBytes((ushort)value);
+                        break;
+                    default:
+                        set = false;
+                        break;
+                }
+
+                if (set)
+                    Memory.WriteProcessMemory(Memory.handle, (IntPtr)address, buffer, size, out intPtr);
             }
         }
 
         private byte[] buffer;
         private IntPtr intPtr;
+        private int size = 4;
+        private SupportedType type;
 
         public AddressObject()
         {
             address = Memory.baseAddress;
-            buffer = new byte[4];
+            buffer = new byte[8];
+            GetTypeAndSize();
         }
 
         public AddressObject(ulong _address)
         {
             address = _address;
-            buffer = new byte[4];
+            buffer = new byte[8];
+            GetTypeAndSize();
+        }
+
+        private void GetTypeAndSize()
+        {
+            if (typeof(T) == typeof(SByte)) { type = SupportedType.s8; size = 1; }
+            if (typeof(T) == typeof(short)) { type = SupportedType.s16; size = 2; }
+            if (typeof(T) == typeof(int)) { type = SupportedType.s32; size = 4; }
+            if (typeof(T) == typeof(long)) { type = SupportedType.s64; size = 8; }
+            if (typeof(T) == typeof(Byte)) { type = SupportedType.u8; size = 1; }
+            if (typeof(T) == typeof(ushort)) { type = SupportedType.u16; size = 2; }
+            if (typeof(T) == typeof(uint)) { type = SupportedType.u32; size = 4; }
+            if (typeof(T) == typeof(ulong)) { type = SupportedType.u64; size = 8; }
+            if (typeof(T) == typeof(float)) { type = SupportedType.Float;  size = 4; }
+            if (typeof(T) == typeof(double)) { type = SupportedType.Double; size = 8; }
+
+            if (typeof(T) == typeof(byte)) { type = SupportedType.u8; size = 1; }
+        }
+
+        private enum SupportedType
+        {
+            s8,
+            s16,
+            s32,
+            s64,
+            u8,
+            u16,
+            u32,
+            u64,
+            Float,
+            Double
         }
     }
 }

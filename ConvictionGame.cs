@@ -20,30 +20,51 @@ namespace SCC_Trainer
             }
         }
 
+        private SCCVersion version;
+
         private IntPtr mapNamePtr;
 
         private byte[] buffer = new byte[64];
         private IntPtr numBytesRead;
 
-        private ulong oldSceneCounterAddr;
-        private ulong sceneCounterAddr;
+        public ulong oldSceneCounterAddr;
+        public ulong sceneCounterAddr;
 
 
-        public ConvictionGame()
+        public ConvictionGame(SCCVersion ver)
         {
             if (Memory.handle == null)
                 throw new Exception("Must hook game before instantiating ConvictionGame object!");
 
+            version = ver;
             sceneCounterAddr = Memory.GetAddressFromPointer(0xFCB49C, 0x18, 0x28);
             oldSceneCounterAddr = sceneCounterAddr;
             Initialize();
+            Program.Log("Program hooked! Version: {0}", version.ToString());
         }
 
         public void Initialize()
         {
             player = new PlayerData();
 
-            mapNamePtr = (IntPtr)Memory.GetAddressFromPointer(0xF96294, 5);
+            switch (version)
+            {
+                case SCCVersion.Steam:
+                {
+                    mapNamePtr = (IntPtr)Memory.GetAddressFromPointer(0xF961D4, 5);
+                    break;
+                }
+
+                case SCCVersion.Uplay:
+                {
+                    mapNamePtr = (IntPtr)Memory.GetAddressFromPointer(0xF96294, 5);
+                    break;
+                }
+
+                default:
+                    throw new Exception("Game version not set!");
+                    break;
+            }
         }
 
         public void CheckIfReloaded()
@@ -52,53 +73,79 @@ namespace SCC_Trainer
             if (sceneCounterAddr != oldSceneCounterAddr)
             {
                 Initialize();
+                Program.Log("Scene reloaded");
                 oldSceneCounterAddr = sceneCounterAddr;
             }
         }
     }
 
-    public struct PositionVector
+    public struct PlayerTransform
     {
-        public float X
+        public float PosX
         {
-            get { return x.Value; }
-            set { x.Value = value;  }
+            get { return (float)posx.Value; }
+            set { posx.Value = value;  }
         }
-        public float Y
+        public float PosY
         {
-            get { return y.Value; }
-            set { y.Value = value; }
+            get { return (float)posy.Value; }
+            set { posy.Value = value; }
         }
-        public float Z
+        public float PosZ
         {
-            get { return z.Value; }
-            set { z.Value = value; }
+            get { return (float)posz.Value; }
+            set { posz.Value = value; }
+        }
+        public ushort RotY
+        {
+            get { return (ushort)roty.Value; }
+            set { roty.Value = value; }
         }
 
-        private AddressObject x;
-        private AddressObject y;
-        private AddressObject z;
+        private AddressObject<float> posx;
+        private AddressObject<float> posy;
+        private AddressObject<float> posz;
+        private AddressObject<ushort> roty;
 
-        public PositionVector(ulong xPosAddress, params ulong[] offsets)
+        public PlayerTransform(ulong playerObjectAddr, params ulong[] offsets)
         {
-            x = new AddressObject();
-            x.address = Memory.GetAddressFromPointer(xPosAddress, offsets);
+            ulong objectAddr = Memory.GetAddressFromPointer(playerObjectAddr, offsets);
 
-            y = new AddressObject();
-            y.address = x.address + 8;
+            posx = new AddressObject<float>();
+            posx.address = objectAddr + 0x94;
 
-            z = new AddressObject();
-            z.address = x.address + 4;
+            posy = new AddressObject<float>();
+            posy.address = objectAddr + 0x9C;
+
+            posz = new AddressObject<float>();
+            posz.address = objectAddr + 0x98;
+
+            roty = new AddressObject<ushort>();
+            roty.address = objectAddr + 0xA4;
         }
+    }
+
+    public struct Transform
+    {
+        public float  PosX;
+        public float  PosY;
+        public float  PosZ;
+        public ushort RotY;
     }
 
     public class PlayerData
     {
-        public PositionVector position;
+        public PlayerTransform transform;
 
         public PlayerData()
         {
-            position = new PositionVector(0xFCB49C, 0x18, 0x94);
+            transform = new PlayerTransform(0xFCB49C, 0x18, 0x0);
         }
+    }
+
+    public enum SCCVersion
+    {
+        Steam,
+        Uplay
     }
 }

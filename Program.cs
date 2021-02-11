@@ -8,6 +8,13 @@ namespace SCC_Trainer
 {
     static class Program
     {
+        public static TextBox log;
+
+        public static void Log(string s, params object?[] args)
+        {
+            log.Text += String.Format(s, args);
+            log.Text += "\r\n";
+        }
         /// <summary>
         ///  The main entry point for the application.
         /// </summary>
