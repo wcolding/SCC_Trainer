@@ -36,6 +36,8 @@ namespace SCC_Trainer
             gameVersionToggle.SelectedIndex = 0;
             DeactivateForm();
 
+            controllerPortBox.Value = controllerIndex + 1;
+
             warpPoint = new Transform();
             set_warp_pressed = false;
             recall_warp_pressed = false;
@@ -235,6 +237,11 @@ namespace SCC_Trainer
             {
                 Program.Log(s, args);
             }));
+        }
+
+        private void controllerPortBox_ValueChanged(object sender, EventArgs e)
+        {
+            controllerIndex = (int)controllerPortBox.Value - 1;
         }
     }
 }

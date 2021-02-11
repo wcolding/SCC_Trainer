@@ -12,8 +12,7 @@ namespace SCC_Trainer
 
         public static void Log(string s, params object?[] args)
         {
-            log.Text += String.Format(s, args);
-            log.Text += "\r\n";
+            log.AppendText(String.Format(s, args) + "\r\n");
         }
         /// <summary>
         ///  The main entry point for the application.

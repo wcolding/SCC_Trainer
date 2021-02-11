@@ -44,10 +44,13 @@ namespace SCC_Trainer
             this.logBox = new System.Windows.Forms.TextBox();
             this.oldCounterAddr = new System.Windows.Forms.Label();
             this.newCounterAddr = new System.Windows.Forms.Label();
+            this.controllerPortBox = new System.Windows.Forms.NumericUpDown();
+            this.controllerLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.posX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.posY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.posZ)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rotY)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.controllerPortBox)).BeginInit();
             this.SuspendLayout();
             // 
             // posX
@@ -193,6 +196,7 @@ namespace SCC_Trainer
             this.logBox.Multiline = true;
             this.logBox.Name = "logBox";
             this.logBox.ReadOnly = true;
+            this.logBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.logBox.Size = new System.Drawing.Size(394, 68);
             this.logBox.TabIndex = 13;
             // 
@@ -214,11 +218,46 @@ namespace SCC_Trainer
             this.newCounterAddr.TabIndex = 15;
             this.newCounterAddr.Text = "New Scene Counter Addr:";
             // 
+            // controllerPortBox
+            // 
+            this.controllerPortBox.Location = new System.Drawing.Point(448, 12);
+            this.controllerPortBox.Maximum = new decimal(new int[] {
+            4,
+            0,
+            0,
+            0});
+            this.controllerPortBox.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.controllerPortBox.Name = "controllerPortBox";
+            this.controllerPortBox.Size = new System.Drawing.Size(48, 23);
+            this.controllerPortBox.TabIndex = 16;
+            this.controllerPortBox.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.controllerPortBox.ValueChanged += new System.EventHandler(this.controllerPortBox_ValueChanged);
+            // 
+            // controllerLabel
+            // 
+            this.controllerLabel.AutoSize = true;
+            this.controllerLabel.Location = new System.Drawing.Point(374, 14);
+            this.controllerLabel.Name = "controllerLabel";
+            this.controllerLabel.Size = new System.Drawing.Size(70, 15);
+            this.controllerLabel.TabIndex = 17;
+            this.controllerLabel.Text = "XInput Port:";
+            this.controllerLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(596, 245);
+            this.Controls.Add(this.controllerLabel);
+            this.Controls.Add(this.controllerPortBox);
             this.Controls.Add(this.newCounterAddr);
             this.Controls.Add(this.oldCounterAddr);
             this.Controls.Add(this.logBox);
@@ -240,6 +279,7 @@ namespace SCC_Trainer
             ((System.ComponentModel.ISupportInitialize)(this.posY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.posZ)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rotY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.controllerPortBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -261,6 +301,8 @@ namespace SCC_Trainer
         private System.Windows.Forms.TextBox logBox;
         private System.Windows.Forms.Label oldCounterAddr;
         private System.Windows.Forms.Label newCounterAddr;
+        private System.Windows.Forms.NumericUpDown controllerPortBox;
+        private System.Windows.Forms.Label controllerLabel;
     }
 }
 
