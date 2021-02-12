@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SCC_Trainer
@@ -33,7 +27,7 @@ namespace SCC_Trainer
 
             Program.log = this.logBox;
 
-            gameVersionToggle.SelectedIndex = 0;
+            gameVersionToggle.SelectedIndex = 1;
             DeactivateForm();
 
             controllerPortBox.Value = controllerIndex + 1;
