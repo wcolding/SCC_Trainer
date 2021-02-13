@@ -97,7 +97,7 @@ namespace SCC_Trainer
         public float PosX
         {
             get { return (float)posx.Value; }
-            set { posx.Value = value;  }
+            set { posx.Value = value; }
         }
         public float PosY
         {
@@ -114,11 +114,30 @@ namespace SCC_Trainer
             get { return (ushort)roty.Value; }
             set { roty.Value = value; }
         }
+        public float VelX
+        {
+            get { return (float)velx.Value; }
+            set { velx.Value = value; }
+        }
+        public float VelY
+        {
+            get { return (float)vely.Value; }
+            set { vely.Value = value; }
+        }
+        public float VelZ
+        {
+            get { return (float)velz.Value; }
+            set { velz.Value = value; }
+        }
 
         private AddressObject<float> posx;
         private AddressObject<float> posy;
         private AddressObject<float> posz;
         private AddressObject<ushort> roty;
+
+        private AddressObject<float> velx;
+        private AddressObject<float> vely;
+        private AddressObject<float> velz;
 
         public PlayerTransform(ulong playerObjectAddr, params ulong[] offsets)
         {
@@ -135,6 +154,15 @@ namespace SCC_Trainer
 
             roty = new AddressObject<ushort>();
             roty.address = objectAddr + 0xA4;
+
+            velx = new AddressObject<float>();
+            velx.address = objectAddr + 0x1C0;
+
+            vely = new AddressObject<float>();
+            vely.address = objectAddr + 0x1C8;
+
+            velz = new AddressObject<float>();
+            velz.address = objectAddr + 0x1C4;
         }
     }
 

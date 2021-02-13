@@ -46,6 +46,9 @@ namespace SCC_Trainer
             posY.Value = (decimal)conviction.player.transform.PosY;
             posZ.Value = (decimal)conviction.player.transform.PosZ;
             rotY.Value = conviction.player.transform.RotY;
+            velX.Value = (decimal)conviction.player.transform.VelX;
+            velY.Value = (decimal)conviction.player.transform.VelY;
+            velZ.Value = (decimal)conviction.player.transform.VelZ;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -75,6 +78,24 @@ namespace SCC_Trainer
         {
             if (hooked)
                 conviction.player.transform.RotY = (ushort)rotY.Value;
+        }
+
+        private void velX_ValueChanged(object sender, EventArgs e)
+        {
+            if (hooked)
+                conviction.player.transform.VelX = (float)velX.Value;
+        }
+
+        private void velY_ValueChanged(object sender, EventArgs e)
+        {
+            if (hooked)
+                conviction.player.transform.VelY = (float)velY.Value;
+        }
+
+        private void velZ_ValueChanged(object sender, EventArgs e)
+        {
+            if (hooked)
+                conviction.player.transform.VelZ = (float)velZ.Value;
         }
 
         private void ReadGameState(object sender, DoWorkEventArgs e)
@@ -199,15 +220,26 @@ namespace SCC_Trainer
 
         private void DeactivateForm()
         {
-            curMapLabel.Enabled = false;
             posX.Enabled = false;
             posY.Enabled = false;
             posZ.Enabled = false;
+            rotY.Enabled = false;
+            velX.Enabled = false;
+            velY.Enabled = false;
+            velZ.Enabled = false;
 
             xposLabel.Enabled = false;
             yposLabel.Enabled = false;
             zposLabel.Enabled = false;
             yrotLabel.Enabled = false;
+            xvelLabel.Enabled = false;
+            yvelLabel.Enabled = false;
+            zvelLabel.Enabled = false;
+
+            curMapLabel.Enabled = false;
+            sceneCounterLabel.Enabled = false;
+            oldCounterAddr.Enabled = false;
+            newCounterAddr.Enabled = false;
 
             gameVersionToggle.Enabled = true;
             hookButton.Enabled = true;
@@ -215,15 +247,26 @@ namespace SCC_Trainer
 
         private void ActivateForm()
         {
-            curMapLabel.Enabled = true;
             posX.Enabled = true;
             posY.Enabled = true;
             posZ.Enabled = true;
+            rotY.Enabled = true;
+            velX.Enabled = true;
+            velY.Enabled = true;
+            velZ.Enabled = true;
 
             xposLabel.Enabled = true;
             yposLabel.Enabled = true;
             zposLabel.Enabled = true;
             yrotLabel.Enabled = true;
+            xvelLabel.Enabled = true;
+            yvelLabel.Enabled = true;
+            zvelLabel.Enabled = true;
+
+            curMapLabel.Enabled = true;
+            sceneCounterLabel.Enabled = true;
+            oldCounterAddr.Enabled = true;
+            newCounterAddr.Enabled = true;
 
             gameVersionToggle.Enabled = false;
             hookButton.Enabled = false;

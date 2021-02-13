@@ -47,11 +47,20 @@ namespace SCC_Trainer
             this.controllerPortBox = new System.Windows.Forms.NumericUpDown();
             this.controllerLabel = new System.Windows.Forms.Label();
             this.sceneCounterLabel = new System.Windows.Forms.Label();
+            this.zvelLabel = new System.Windows.Forms.Label();
+            this.yvelLabel = new System.Windows.Forms.Label();
+            this.xvelLabel = new System.Windows.Forms.Label();
+            this.velZ = new System.Windows.Forms.NumericUpDown();
+            this.velY = new System.Windows.Forms.NumericUpDown();
+            this.velX = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.posX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.posY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.posZ)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rotY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.controllerPortBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.velZ)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.velY)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.velX)).BeginInit();
             this.SuspendLayout();
             // 
             // posX
@@ -194,12 +203,12 @@ namespace SCC_Trainer
             // 
             // logBox
             // 
-            this.logBox.Location = new System.Drawing.Point(82, 165);
+            this.logBox.Location = new System.Drawing.Point(82, 175);
             this.logBox.Multiline = true;
             this.logBox.Name = "logBox";
             this.logBox.ReadOnly = true;
             this.logBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.logBox.Size = new System.Drawing.Size(394, 68);
+            this.logBox.Size = new System.Drawing.Size(394, 119);
             this.logBox.TabIndex = 13;
             // 
             // oldCounterAddr
@@ -262,11 +271,101 @@ namespace SCC_Trainer
             this.sceneCounterLabel.TabIndex = 18;
             this.sceneCounterLabel.Text = "Scene counter:";
             // 
+            // zvelLabel
+            // 
+            this.zvelLabel.AutoSize = true;
+            this.zvelLabel.Location = new System.Drawing.Point(282, 128);
+            this.zvelLabel.Name = "zvelLabel";
+            this.zvelLabel.Size = new System.Drawing.Size(58, 15);
+            this.zvelLabel.TabIndex = 24;
+            this.zvelLabel.Text = "Z Velocity";
+            // 
+            // yvelLabel
+            // 
+            this.yvelLabel.AutoSize = true;
+            this.yvelLabel.Location = new System.Drawing.Point(182, 128);
+            this.yvelLabel.Name = "yvelLabel";
+            this.yvelLabel.Size = new System.Drawing.Size(58, 15);
+            this.yvelLabel.TabIndex = 23;
+            this.yvelLabel.Text = "Y Velocity";
+            // 
+            // xvelLabel
+            // 
+            this.xvelLabel.AutoSize = true;
+            this.xvelLabel.Location = new System.Drawing.Point(82, 128);
+            this.xvelLabel.Name = "xvelLabel";
+            this.xvelLabel.Size = new System.Drawing.Size(58, 15);
+            this.xvelLabel.TabIndex = 22;
+            this.xvelLabel.Text = "X Velocity";
+            // 
+            // velZ
+            // 
+            this.velZ.DecimalPlaces = 4;
+            this.velZ.Location = new System.Drawing.Point(282, 146);
+            this.velZ.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.velZ.Minimum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            -2147483648});
+            this.velZ.Name = "velZ";
+            this.velZ.Size = new System.Drawing.Size(94, 23);
+            this.velZ.TabIndex = 21;
+            this.velZ.ValueChanged += new System.EventHandler(this.velZ_ValueChanged);
+            // 
+            // velY
+            // 
+            this.velY.DecimalPlaces = 4;
+            this.velY.Location = new System.Drawing.Point(182, 146);
+            this.velY.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.velY.Minimum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            -2147483648});
+            this.velY.Name = "velY";
+            this.velY.Size = new System.Drawing.Size(94, 23);
+            this.velY.TabIndex = 20;
+            this.velY.ValueChanged += new System.EventHandler(this.velY_ValueChanged);
+            // 
+            // velX
+            // 
+            this.velX.DecimalPlaces = 4;
+            this.velX.Location = new System.Drawing.Point(82, 146);
+            this.velX.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.velX.Minimum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            -2147483648});
+            this.velX.Name = "velX";
+            this.velX.Size = new System.Drawing.Size(94, 23);
+            this.velX.TabIndex = 19;
+            this.velX.ValueChanged += new System.EventHandler(this.velX_ValueChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(596, 245);
+            this.ClientSize = new System.Drawing.Size(596, 306);
+            this.Controls.Add(this.zvelLabel);
+            this.Controls.Add(this.yvelLabel);
+            this.Controls.Add(this.xvelLabel);
+            this.Controls.Add(this.velZ);
+            this.Controls.Add(this.velY);
+            this.Controls.Add(this.velX);
             this.Controls.Add(this.sceneCounterLabel);
             this.Controls.Add(this.controllerLabel);
             this.Controls.Add(this.controllerPortBox);
@@ -292,6 +391,9 @@ namespace SCC_Trainer
             ((System.ComponentModel.ISupportInitialize)(this.posZ)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rotY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.controllerPortBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.velZ)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.velY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.velX)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -316,6 +418,12 @@ namespace SCC_Trainer
         private System.Windows.Forms.NumericUpDown controllerPortBox;
         private System.Windows.Forms.Label controllerLabel;
         private System.Windows.Forms.Label sceneCounterLabel;
+        private System.Windows.Forms.Label zvelLabel;
+        private System.Windows.Forms.Label yvelLabel;
+        private System.Windows.Forms.Label xvelLabel;
+        private System.Windows.Forms.NumericUpDown velZ;
+        private System.Windows.Forms.NumericUpDown velY;
+        private System.Windows.Forms.NumericUpDown velX;
     }
 }
 
