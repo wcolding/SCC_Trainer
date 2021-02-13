@@ -46,6 +46,7 @@ namespace SCC_Trainer
             this.newCounterAddr = new System.Windows.Forms.Label();
             this.controllerPortBox = new System.Windows.Forms.NumericUpDown();
             this.controllerLabel = new System.Windows.Forms.Label();
+            this.sceneCounterLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.posX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.posY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.posZ)).BeginInit();
@@ -56,7 +57,7 @@ namespace SCC_Trainer
             // posX
             // 
             this.posX.DecimalPlaces = 4;
-            this.posX.Location = new System.Drawing.Point(82, 114);
+            this.posX.Location = new System.Drawing.Point(82, 93);
             this.posX.Maximum = new decimal(new int[] {
             2147483647,
             0,
@@ -75,7 +76,7 @@ namespace SCC_Trainer
             // posY
             // 
             this.posY.DecimalPlaces = 4;
-            this.posY.Location = new System.Drawing.Point(182, 114);
+            this.posY.Location = new System.Drawing.Point(182, 93);
             this.posY.Maximum = new decimal(new int[] {
             2147483647,
             0,
@@ -94,7 +95,7 @@ namespace SCC_Trainer
             // posZ
             // 
             this.posZ.DecimalPlaces = 4;
-            this.posZ.Location = new System.Drawing.Point(282, 114);
+            this.posZ.Location = new System.Drawing.Point(282, 93);
             this.posZ.Maximum = new decimal(new int[] {
             2147483647,
             0,
@@ -143,7 +144,7 @@ namespace SCC_Trainer
             // 
             // rotY
             // 
-            this.rotY.Location = new System.Drawing.Point(382, 114);
+            this.rotY.Location = new System.Drawing.Point(382, 93);
             this.rotY.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -157,7 +158,7 @@ namespace SCC_Trainer
             // xposLabel
             // 
             this.xposLabel.AutoSize = true;
-            this.xposLabel.Location = new System.Drawing.Point(82, 96);
+            this.xposLabel.Location = new System.Drawing.Point(82, 75);
             this.xposLabel.Name = "xposLabel";
             this.xposLabel.Size = new System.Drawing.Size(60, 15);
             this.xposLabel.TabIndex = 9;
@@ -166,7 +167,7 @@ namespace SCC_Trainer
             // yposLabel
             // 
             this.yposLabel.AutoSize = true;
-            this.yposLabel.Location = new System.Drawing.Point(182, 96);
+            this.yposLabel.Location = new System.Drawing.Point(182, 75);
             this.yposLabel.Name = "yposLabel";
             this.yposLabel.Size = new System.Drawing.Size(60, 15);
             this.yposLabel.TabIndex = 10;
@@ -175,7 +176,7 @@ namespace SCC_Trainer
             // zposLabel
             // 
             this.zposLabel.AutoSize = true;
-            this.zposLabel.Location = new System.Drawing.Point(282, 96);
+            this.zposLabel.Location = new System.Drawing.Point(282, 75);
             this.zposLabel.Name = "zposLabel";
             this.zposLabel.Size = new System.Drawing.Size(60, 15);
             this.zposLabel.TabIndex = 11;
@@ -184,7 +185,7 @@ namespace SCC_Trainer
             // yrotLabel
             // 
             this.yrotLabel.AutoSize = true;
-            this.yrotLabel.Location = new System.Drawing.Point(382, 96);
+            this.yrotLabel.Location = new System.Drawing.Point(382, 75);
             this.yrotLabel.Name = "yrotLabel";
             this.yrotLabel.Size = new System.Drawing.Size(62, 15);
             this.yrotLabel.TabIndex = 12;
@@ -203,7 +204,7 @@ namespace SCC_Trainer
             // oldCounterAddr
             // 
             this.oldCounterAddr.AutoSize = true;
-            this.oldCounterAddr.Location = new System.Drawing.Point(12, 24);
+            this.oldCounterAddr.Location = new System.Drawing.Point(12, 39);
             this.oldCounterAddr.Name = "oldCounterAddr";
             this.oldCounterAddr.Size = new System.Drawing.Size(138, 15);
             this.oldCounterAddr.TabIndex = 14;
@@ -212,7 +213,7 @@ namespace SCC_Trainer
             // newCounterAddr
             // 
             this.newCounterAddr.AutoSize = true;
-            this.newCounterAddr.Location = new System.Drawing.Point(12, 39);
+            this.newCounterAddr.Location = new System.Drawing.Point(12, 53);
             this.newCounterAddr.Name = "newCounterAddr";
             this.newCounterAddr.Size = new System.Drawing.Size(143, 15);
             this.newCounterAddr.TabIndex = 15;
@@ -251,11 +252,21 @@ namespace SCC_Trainer
             this.controllerLabel.Text = "XInput Port:";
             this.controllerLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
+            // sceneCounterLabel
+            // 
+            this.sceneCounterLabel.AutoSize = true;
+            this.sceneCounterLabel.Location = new System.Drawing.Point(12, 24);
+            this.sceneCounterLabel.Name = "sceneCounterLabel";
+            this.sceneCounterLabel.Size = new System.Drawing.Size(85, 15);
+            this.sceneCounterLabel.TabIndex = 18;
+            this.sceneCounterLabel.Text = "Scene counter:";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(596, 245);
+            this.Controls.Add(this.sceneCounterLabel);
             this.Controls.Add(this.controllerLabel);
             this.Controls.Add(this.controllerPortBox);
             this.Controls.Add(this.newCounterAddr);
@@ -303,6 +314,7 @@ namespace SCC_Trainer
         private System.Windows.Forms.Label newCounterAddr;
         private System.Windows.Forms.NumericUpDown controllerPortBox;
         private System.Windows.Forms.Label controllerLabel;
+        private System.Windows.Forms.Label sceneCounterLabel;
     }
 }
 

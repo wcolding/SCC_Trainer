@@ -100,6 +100,7 @@ namespace SCC_Trainer
                     {
                         curMapLabel.Text = "Current Map: " + mapName;
                         GetTransform();
+                        sceneCounterLabel.Text = String.Format("Scene Counter Addr: {0}", conviction.SceneCounter);
                     }));
 
                     XInput.XInputGetState(controllerIndex, ref xInputState);

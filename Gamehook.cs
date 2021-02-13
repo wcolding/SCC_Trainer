@@ -175,6 +175,12 @@ namespace SCC_Trainer
                     case SupportedType.u16:
                         t = BitConverter.ToUInt16(buffer);
                         break;
+                    case SupportedType.s32:
+                        t = BitConverter.ToInt32(buffer);
+                        break;
+                    case SupportedType.u32:
+                        t = BitConverter.ToUInt32(buffer);
+                        break;
                     default:
                         t = 0;
                         break;
@@ -193,6 +199,12 @@ namespace SCC_Trainer
                         break;
                     case SupportedType.u16:
                         buffer = BitConverter.GetBytes((ushort)value);
+                        break;
+                    case SupportedType.s32:
+                        buffer = BitConverter.GetBytes((int)value);
+                        break;
+                    case SupportedType.u32:
+                        buffer = BitConverter.GetBytes((uint)value);
                         break;
                     default:
                         set = false;

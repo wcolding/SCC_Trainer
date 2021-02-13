@@ -29,6 +29,17 @@ namespace SCC_Trainer
         public ulong oldSceneCounterAddr;
         public ulong sceneCounterAddr;
 
+        public int SceneCounter
+        {
+            get 
+            {
+                cachedSceneCounter = (int)sceneCounter.Value;
+                return cachedSceneCounter; 
+            }
+        }
+        private AddressObject<int> sceneCounter;
+        private int cachedSceneCounter = 0;
+
 
         public ConvictionGame(SCCVersion ver)
         {
@@ -38,6 +49,7 @@ namespace SCC_Trainer
             version = ver;
             sceneCounterAddr = Memory.GetAddressFromPointer(0xFCB49C, 0x18, 0x28);
             oldSceneCounterAddr = sceneCounterAddr;
+            sceneCounter = new AddressObject<int>(sceneCounterAddr);
             Initialize();
             Program.Log("Program hooked! Version: {0}", version.ToString());
         }
@@ -72,7 +84,9 @@ namespace SCC_Trainer
             if (sceneCounterAddr != oldSceneCounterAddr)
             {
                 Initialize();
-                Program.Log("Scene reloaded");
+                sceneCounter = new AddressObject<int>(sceneCounterAddr);
+                if (cachedSceneCounter > 0)
+                    Program.Log("Scene reloaded - previous counter at {0}", cachedSceneCounter);
                 oldSceneCounterAddr = sceneCounterAddr;
             }
         }
