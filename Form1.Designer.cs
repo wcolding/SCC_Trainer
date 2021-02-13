@@ -29,6 +29,7 @@ namespace SCC_Trainer
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.posX = new System.Windows.Forms.NumericUpDown();
             this.posY = new System.Windows.Forms.NumericUpDown();
             this.posZ = new System.Windows.Forms.NumericUpDown();
@@ -383,8 +384,10 @@ namespace SCC_Trainer
             this.Controls.Add(this.posZ);
             this.Controls.Add(this.posY);
             this.Controls.Add(this.posX);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
-            this.Text = "SCC Trainer";
+            this.Text = "Splinter Cell Conviction Tool";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.posX)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.posY)).EndInit();
