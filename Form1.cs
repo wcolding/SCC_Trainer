@@ -1,6 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows.Forms;
+using System.Configuration;
+using System.Collections.Specialized;
 
 namespace SCC_Trainer
 {
@@ -27,7 +29,8 @@ namespace SCC_Trainer
 
             Program.log = this.logBox;
 
-            gameVersionToggle.SelectedIndex = 1;
+            gameVersionToggle.SelectedIndex = Properties.Settings.Default.GameVersion;
+            controllerIndex = Properties.Settings.Default.XInputPort;
             DeactivateForm();
 
             controllerPortBox.Value = controllerIndex + 1;
@@ -237,6 +240,14 @@ namespace SCC_Trainer
         private void controllerPortBox_ValueChanged(object sender, EventArgs e)
         {
             controllerIndex = (int)controllerPortBox.Value - 1;
+            Properties.Settings.Default.XInputPort = controllerIndex;
+            Properties.Settings.Default.Save();
+        }
+
+        private void gameVersionToggle_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.GameVersion = gameVersionToggle.SelectedIndex;
+            Properties.Settings.Default.Save();
         }
     }
 }

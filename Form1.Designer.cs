@@ -131,6 +131,7 @@ namespace SCC_Trainer
             this.gameVersionToggle.Name = "gameVersionToggle";
             this.gameVersionToggle.Size = new System.Drawing.Size(82, 23);
             this.gameVersionToggle.TabIndex = 6;
+            this.gameVersionToggle.SelectedIndexChanged += new System.EventHandler(this.gameVersionToggle_SelectedIndexChanged);
             // 
             // hookButton
             // 
