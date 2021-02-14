@@ -54,6 +54,7 @@ namespace SCC_Trainer
             this.velZ = new System.Windows.Forms.NumericUpDown();
             this.velY = new System.Windows.Forms.NumericUpDown();
             this.velX = new System.Windows.Forms.NumericUpDown();
+            this.backgroundWorker2 = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.posX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.posY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.posZ)).BeginInit();
@@ -427,6 +428,7 @@ namespace SCC_Trainer
         private System.Windows.Forms.NumericUpDown velZ;
         private System.Windows.Forms.NumericUpDown velY;
         private System.Windows.Forms.NumericUpDown velX;
+        private System.ComponentModel.BackgroundWorker backgroundWorker2;
     }
 }
 

@@ -20,6 +20,11 @@ namespace SCC_Trainer
         [DllImport("user32.dll", SetLastError = true)]
         static extern uint GetWindowThreadProcessId(IntPtr hWnd, out int lpdwProcessId);
 
+        [DllImport("kernel32.dll", SetLastError = true)]
+        static extern UInt32 WaitForSingleObject(IntPtr hHandle, UInt32 dwMilliseconds);
+
+        const UInt32 WAIT_TIMEOUT = 0x00000102;
+
         [Flags]
         public enum ProcessAccessFlags : uint
         {
@@ -148,6 +153,19 @@ namespace SCC_Trainer
             value += offsets[offsets.Length - 1];
 
             return value;
+        }
+
+        public static bool GameIsRunning
+        {
+            get
+            {
+                return WaitForSingleObject(handle, 1000) == WAIT_TIMEOUT;
+            }
+        }
+
+        public static void Close()
+        {
+            CloseHandle(handle);
         }
     }
 

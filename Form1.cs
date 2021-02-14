@@ -38,6 +38,9 @@ namespace SCC_Trainer
             warpPoint = new Transform();
             set_warp_pressed = false;
             recall_warp_pressed = false;
+
+            backgroundWorker1.DoWork += new DoWorkEventHandler(ReadGameState);
+            backgroundWorker2.DoWork += new DoWorkEventHandler(CheckIfGameIsStillOpen);
         }
 
         private void GetTransform()
@@ -98,17 +101,29 @@ namespace SCC_Trainer
                 conviction.player.transform.VelZ = (float)velZ.Value;
         }
 
+        private void CheckIfGameIsStillOpen(object sender, DoWorkEventArgs e)
+        {
+            while (hooked)
+            {
+                if (!Memory.GameIsRunning)
+                {
+                    hooked = false;
+                    Memory.Close(); 
+                    
+                    Invoke(new Action(() =>
+                    {
+                        DeactivateForm();
+                        Program.Log("Game was closed.");
+                    }));
+                    return;
+                }
+            }
+        }
+
         private void ReadGameState(object sender, DoWorkEventArgs e)
         {
             while (hooked)
             {
-                if (Memory.handle == null)
-                {
-                    hooked = false;
-                    DeactivateForm();
-                    return;
-                }
-
                 Invoke(new Action(() =>
                 {
                     conviction.CheckIfReloaded();
@@ -208,13 +223,18 @@ namespace SCC_Trainer
         private void hookButton_Click(object sender, EventArgs e)
         {
             Memory.HookProgram("Conviction", ProcessMode.x86);
-            if (Memory.handle != null)
+            if (Memory.GameIsRunning)
             {
                 hooked = true;
                 ActivateForm();
-                backgroundWorker1.DoWork += new DoWorkEventHandler(ReadGameState);
                 conviction = new ConvictionGame((SCCVersion)gameVersionToggle.SelectedIndex);
                 backgroundWorker1.RunWorkerAsync();
+                backgroundWorker2.RunWorkerAsync();
+            }
+            else
+            {
+                Memory.Close();
+                Log("Unable to open game.");
             }
         }
 
