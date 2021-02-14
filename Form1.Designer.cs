@@ -55,6 +55,8 @@ namespace SCC_Trainer
             this.velY = new System.Windows.Forms.NumericUpDown();
             this.velX = new System.Windows.Forms.NumericUpDown();
             this.backgroundWorker2 = new System.ComponentModel.BackgroundWorker();
+            this.setButton = new System.Windows.Forms.Button();
+            this.recallButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.posX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.posY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.posZ)).BeginInit();
@@ -357,11 +359,33 @@ namespace SCC_Trainer
             this.velX.TabIndex = 19;
             this.velX.ValueChanged += new System.EventHandler(this.velX_ValueChanged);
             // 
+            // setButton
+            // 
+            this.setButton.Location = new System.Drawing.Point(502, 90);
+            this.setButton.Name = "setButton";
+            this.setButton.Size = new System.Drawing.Size(82, 25);
+            this.setButton.TabIndex = 25;
+            this.setButton.Text = "Set Warp";
+            this.setButton.UseVisualStyleBackColor = true;
+            this.setButton.Click += new System.EventHandler(this.setButton_Click);
+            // 
+            // recallButton
+            // 
+            this.recallButton.Location = new System.Drawing.Point(502, 123);
+            this.recallButton.Name = "recallButton";
+            this.recallButton.Size = new System.Drawing.Size(82, 25);
+            this.recallButton.TabIndex = 26;
+            this.recallButton.Text = "Recall Warp";
+            this.recallButton.UseVisualStyleBackColor = true;
+            this.recallButton.Click += new System.EventHandler(this.recallButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(596, 306);
+            this.Controls.Add(this.recallButton);
+            this.Controls.Add(this.setButton);
             this.Controls.Add(this.zvelLabel);
             this.Controls.Add(this.yvelLabel);
             this.Controls.Add(this.xvelLabel);
@@ -429,6 +453,8 @@ namespace SCC_Trainer
         private System.Windows.Forms.NumericUpDown velY;
         private System.Windows.Forms.NumericUpDown velX;
         private System.ComponentModel.BackgroundWorker backgroundWorker2;
+        private System.Windows.Forms.Button setButton;
+        private System.Windows.Forms.Button recallButton;
     }
 }
 

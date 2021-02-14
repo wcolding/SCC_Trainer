@@ -261,6 +261,9 @@ namespace SCC_Trainer
             oldCounterAddr.Enabled = false;
             newCounterAddr.Enabled = false;
 
+            setButton.Enabled = false;
+            recallButton.Enabled = false;
+
             gameVersionToggle.Enabled = true;
             hookButton.Enabled = true;
         }
@@ -288,6 +291,9 @@ namespace SCC_Trainer
             oldCounterAddr.Enabled = true;
             newCounterAddr.Enabled = true;
 
+            setButton.Enabled = true;
+            recallButton.Enabled = true;
+
             gameVersionToggle.Enabled = false;
             hookButton.Enabled = false;
         }        
@@ -311,6 +317,16 @@ namespace SCC_Trainer
         {
             Properties.Settings.Default.GameVersion = gameVersionToggle.SelectedIndex;
             Properties.Settings.Default.Save();
+        }
+
+        private void setButton_Click(object sender, EventArgs e)
+        {
+            SetWarpPoint();
+        }
+
+        private void recallButton_Click(object sender, EventArgs e)
+        {
+            RecallWarpPoint();
         }
     }
 }
