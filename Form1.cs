@@ -205,7 +205,7 @@ namespace SCC_Trainer
                 warpPoint.PosY = conviction.player.transform.PosY;
                 warpPoint.PosZ = conviction.player.transform.PosZ;
                 warpPoint.RotY = conviction.player.transform.RotY;
-                Log("Warp point set!");
+                Log("Warp point set ({0},{1},{2})", warpPoint.PosX, warpPoint.PosY, warpPoint.PosZ);
             }
         }
 
@@ -217,7 +217,7 @@ namespace SCC_Trainer
                 conviction.player.transform.PosY = warpPoint.PosY;
                 conviction.player.transform.PosZ = warpPoint.PosZ;
                 conviction.player.transform.RotY = warpPoint.RotY;
-                Log("Warp point recalled!");
+                Log("Warp point recalled ({0},{1},{2})", warpPoint.PosX, warpPoint.PosY, warpPoint.PosZ);
             }
         }
 
