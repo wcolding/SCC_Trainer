@@ -139,6 +139,7 @@ namespace SCC_Trainer
                     {
                         curMapLabel.Text = "Current Map: " + mapName;
                         GetTransform();
+                        numEnemies.Value = (decimal)conviction.EnemiesLeft;
                         sceneCounterLabel.Text = String.Format("Scene Counter Addr: {0}", conviction.SceneCounter);
                     }));
 
@@ -264,6 +265,9 @@ namespace SCC_Trainer
             setButton.Enabled = false;
             recallButton.Enabled = false;
 
+            numEnemies.Enabled = false;
+            numEnemiesLabel.Enabled = false;
+
             gameVersionToggle.Enabled = true;
             hookButton.Enabled = true;
         }
@@ -293,6 +297,9 @@ namespace SCC_Trainer
 
             setButton.Enabled = true;
             recallButton.Enabled = true;
+
+            numEnemies.Enabled = true;
+            numEnemiesLabel.Enabled = true;
 
             gameVersionToggle.Enabled = false;
             hookButton.Enabled = false;
@@ -327,6 +334,12 @@ namespace SCC_Trainer
         private void recallButton_Click(object sender, EventArgs e)
         {
             RecallWarpPoint();
+        }
+
+        private void numEnemies_ValueChanged(object sender, EventArgs e)
+        {
+            if (hooked)
+                conviction.EnemiesLeft = (int)numEnemies.Value;
         }
     }
 }

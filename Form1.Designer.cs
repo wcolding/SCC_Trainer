@@ -57,6 +57,8 @@ namespace SCC_Trainer
             this.backgroundWorker2 = new System.ComponentModel.BackgroundWorker();
             this.setButton = new System.Windows.Forms.Button();
             this.recallButton = new System.Windows.Forms.Button();
+            this.numEnemiesLabel = new System.Windows.Forms.Label();
+            this.numEnemies = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.posX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.posY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.posZ)).BeginInit();
@@ -65,6 +67,7 @@ namespace SCC_Trainer
             ((System.ComponentModel.ISupportInitialize)(this.velZ)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.velY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.velX)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numEnemies)).BeginInit();
             this.SuspendLayout();
             // 
             // posX
@@ -379,11 +382,40 @@ namespace SCC_Trainer
             this.recallButton.UseVisualStyleBackColor = true;
             this.recallButton.Click += new System.EventHandler(this.recallButton_Click);
             // 
+            // numEnemiesLabel
+            // 
+            this.numEnemiesLabel.AutoSize = true;
+            this.numEnemiesLabel.Location = new System.Drawing.Point(382, 128);
+            this.numEnemiesLabel.Name = "numEnemiesLabel";
+            this.numEnemiesLabel.Size = new System.Drawing.Size(74, 15);
+            this.numEnemiesLabel.TabIndex = 28;
+            this.numEnemiesLabel.Text = "Enemies Left";
+            // 
+            // numEnemies
+            // 
+            this.numEnemies.Location = new System.Drawing.Point(382, 146);
+            this.numEnemies.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.numEnemies.Minimum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            -2147483648});
+            this.numEnemies.Name = "numEnemies";
+            this.numEnemies.Size = new System.Drawing.Size(94, 23);
+            this.numEnemies.TabIndex = 29;
+            this.numEnemies.ValueChanged += new System.EventHandler(this.numEnemies_ValueChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(596, 306);
+            this.Controls.Add(this.numEnemies);
+            this.Controls.Add(this.numEnemiesLabel);
             this.Controls.Add(this.recallButton);
             this.Controls.Add(this.setButton);
             this.Controls.Add(this.zvelLabel);
@@ -422,6 +454,7 @@ namespace SCC_Trainer
             ((System.ComponentModel.ISupportInitialize)(this.velZ)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.velY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.velX)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numEnemies)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -455,6 +488,8 @@ namespace SCC_Trainer
         private System.ComponentModel.BackgroundWorker backgroundWorker2;
         private System.Windows.Forms.Button setButton;
         private System.Windows.Forms.Button recallButton;
+        private System.Windows.Forms.Label numEnemiesLabel;
+        private System.Windows.Forms.NumericUpDown numEnemies;
     }
 }
 

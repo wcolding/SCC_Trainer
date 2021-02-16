@@ -40,6 +40,13 @@ namespace SCC_Trainer
         private AddressObject<int> sceneCounter;
         private int cachedSceneCounter = 0;
 
+        public int EnemiesLeft
+        {
+            get { return (int)enemiesLeft.Value; }
+            set { enemiesLeft.Value = value; }
+        }
+        private AddressObject<int> enemiesLeft;
+
 
         public ConvictionGame(SCCVersion ver)
         {
@@ -57,6 +64,8 @@ namespace SCC_Trainer
         public void Initialize()
         {
             player = new PlayerData();
+            enemiesLeft = new AddressObject<int>();
+            enemiesLeft.address = Memory.GetAddressFromPointer(0xFCBCB0, 0x8, 0x40, 0x5DC, 0x434, 0x450);
 
             switch (version)
             {
