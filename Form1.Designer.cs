@@ -59,6 +59,8 @@ namespace SCC_Trainer
             this.recallButton = new System.Windows.Forms.Button();
             this.numEnemiesLabel = new System.Windows.Forms.Label();
             this.numEnemies = new System.Windows.Forms.NumericUpDown();
+            this.backgroundWorker3 = new System.ComponentModel.BackgroundWorker();
+            this.backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.posX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.posY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.posZ)).BeginInit();
@@ -73,7 +75,7 @@ namespace SCC_Trainer
             // posX
             // 
             this.posX.DecimalPlaces = 4;
-            this.posX.Location = new System.Drawing.Point(82, 93);
+            this.posX.Location = new System.Drawing.Point(70, 81);
             this.posX.Maximum = new decimal(new int[] {
             2147483647,
             0,
@@ -85,14 +87,14 @@ namespace SCC_Trainer
             0,
             -2147483648});
             this.posX.Name = "posX";
-            this.posX.Size = new System.Drawing.Size(94, 23);
+            this.posX.Size = new System.Drawing.Size(81, 20);
             this.posX.TabIndex = 1;
             this.posX.ValueChanged += new System.EventHandler(this.posX_ValueChanged);
             // 
             // posY
             // 
             this.posY.DecimalPlaces = 4;
-            this.posY.Location = new System.Drawing.Point(182, 93);
+            this.posY.Location = new System.Drawing.Point(156, 81);
             this.posY.Maximum = new decimal(new int[] {
             2147483647,
             0,
@@ -104,14 +106,14 @@ namespace SCC_Trainer
             0,
             -2147483648});
             this.posY.Name = "posY";
-            this.posY.Size = new System.Drawing.Size(94, 23);
+            this.posY.Size = new System.Drawing.Size(81, 20);
             this.posY.TabIndex = 2;
             this.posY.ValueChanged += new System.EventHandler(this.posY_ValueChanged);
             // 
             // posZ
             // 
             this.posZ.DecimalPlaces = 4;
-            this.posZ.Location = new System.Drawing.Point(282, 93);
+            this.posZ.Location = new System.Drawing.Point(242, 81);
             this.posZ.Maximum = new decimal(new int[] {
             2147483647,
             0,
@@ -123,16 +125,16 @@ namespace SCC_Trainer
             0,
             -2147483648});
             this.posZ.Name = "posZ";
-            this.posZ.Size = new System.Drawing.Size(94, 23);
+            this.posZ.Size = new System.Drawing.Size(81, 20);
             this.posZ.TabIndex = 3;
             this.posZ.ValueChanged += new System.EventHandler(this.posZ_ValueChanged);
             // 
             // curMapLabel
             // 
             this.curMapLabel.AutoSize = true;
-            this.curMapLabel.Location = new System.Drawing.Point(12, 9);
+            this.curMapLabel.Location = new System.Drawing.Point(10, 8);
             this.curMapLabel.Name = "curMapLabel";
-            this.curMapLabel.Size = new System.Drawing.Size(77, 15);
+            this.curMapLabel.Size = new System.Drawing.Size(68, 13);
             this.curMapLabel.TabIndex = 5;
             this.curMapLabel.Text = "Current Map:";
             // 
@@ -143,17 +145,17 @@ namespace SCC_Trainer
             this.gameVersionToggle.Items.AddRange(new object[] {
             "Steam",
             "Uplay"});
-            this.gameVersionToggle.Location = new System.Drawing.Point(502, 12);
+            this.gameVersionToggle.Location = new System.Drawing.Point(430, 10);
             this.gameVersionToggle.Name = "gameVersionToggle";
-            this.gameVersionToggle.Size = new System.Drawing.Size(82, 23);
+            this.gameVersionToggle.Size = new System.Drawing.Size(71, 21);
             this.gameVersionToggle.TabIndex = 6;
             this.gameVersionToggle.SelectedIndexChanged += new System.EventHandler(this.gameVersionToggle_SelectedIndexChanged);
             // 
             // hookButton
             // 
-            this.hookButton.Location = new System.Drawing.Point(502, 43);
+            this.hookButton.Location = new System.Drawing.Point(430, 37);
             this.hookButton.Name = "hookButton";
-            this.hookButton.Size = new System.Drawing.Size(82, 25);
+            this.hookButton.Size = new System.Drawing.Size(70, 22);
             this.hookButton.TabIndex = 7;
             this.hookButton.Text = "Hook Game";
             this.hookButton.UseVisualStyleBackColor = true;
@@ -161,84 +163,84 @@ namespace SCC_Trainer
             // 
             // rotY
             // 
-            this.rotY.Location = new System.Drawing.Point(382, 93);
+            this.rotY.Location = new System.Drawing.Point(327, 81);
             this.rotY.Maximum = new decimal(new int[] {
             65535,
             0,
             0,
             0});
             this.rotY.Name = "rotY";
-            this.rotY.Size = new System.Drawing.Size(94, 23);
+            this.rotY.Size = new System.Drawing.Size(81, 20);
             this.rotY.TabIndex = 8;
             this.rotY.ValueChanged += new System.EventHandler(this.rotY_ValueChanged);
             // 
             // xposLabel
             // 
             this.xposLabel.AutoSize = true;
-            this.xposLabel.Location = new System.Drawing.Point(82, 75);
+            this.xposLabel.Location = new System.Drawing.Point(70, 65);
             this.xposLabel.Name = "xposLabel";
-            this.xposLabel.Size = new System.Drawing.Size(60, 15);
+            this.xposLabel.Size = new System.Drawing.Size(54, 13);
             this.xposLabel.TabIndex = 9;
             this.xposLabel.Text = "X Position";
             // 
             // yposLabel
             // 
             this.yposLabel.AutoSize = true;
-            this.yposLabel.Location = new System.Drawing.Point(182, 75);
+            this.yposLabel.Location = new System.Drawing.Point(156, 65);
             this.yposLabel.Name = "yposLabel";
-            this.yposLabel.Size = new System.Drawing.Size(60, 15);
+            this.yposLabel.Size = new System.Drawing.Size(54, 13);
             this.yposLabel.TabIndex = 10;
             this.yposLabel.Text = "Y Position";
             // 
             // zposLabel
             // 
             this.zposLabel.AutoSize = true;
-            this.zposLabel.Location = new System.Drawing.Point(282, 75);
+            this.zposLabel.Location = new System.Drawing.Point(242, 65);
             this.zposLabel.Name = "zposLabel";
-            this.zposLabel.Size = new System.Drawing.Size(60, 15);
+            this.zposLabel.Size = new System.Drawing.Size(54, 13);
             this.zposLabel.TabIndex = 11;
             this.zposLabel.Text = "Z Position";
             // 
             // yrotLabel
             // 
             this.yrotLabel.AutoSize = true;
-            this.yrotLabel.Location = new System.Drawing.Point(382, 75);
+            this.yrotLabel.Location = new System.Drawing.Point(327, 65);
             this.yrotLabel.Name = "yrotLabel";
-            this.yrotLabel.Size = new System.Drawing.Size(62, 15);
+            this.yrotLabel.Size = new System.Drawing.Size(57, 13);
             this.yrotLabel.TabIndex = 12;
             this.yrotLabel.Text = "Y Rotation";
             // 
             // logBox
             // 
-            this.logBox.Location = new System.Drawing.Point(82, 175);
+            this.logBox.Location = new System.Drawing.Point(70, 152);
             this.logBox.Multiline = true;
             this.logBox.Name = "logBox";
             this.logBox.ReadOnly = true;
             this.logBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.logBox.Size = new System.Drawing.Size(394, 119);
+            this.logBox.Size = new System.Drawing.Size(338, 104);
             this.logBox.TabIndex = 13;
             // 
             // oldCounterAddr
             // 
             this.oldCounterAddr.AutoSize = true;
-            this.oldCounterAddr.Location = new System.Drawing.Point(12, 39);
+            this.oldCounterAddr.Location = new System.Drawing.Point(10, 34);
             this.oldCounterAddr.Name = "oldCounterAddr";
-            this.oldCounterAddr.Size = new System.Drawing.Size(138, 15);
+            this.oldCounterAddr.Size = new System.Drawing.Size(125, 13);
             this.oldCounterAddr.TabIndex = 14;
             this.oldCounterAddr.Text = "Old Scene Counter Addr:";
             // 
             // newCounterAddr
             // 
             this.newCounterAddr.AutoSize = true;
-            this.newCounterAddr.Location = new System.Drawing.Point(12, 53);
+            this.newCounterAddr.Location = new System.Drawing.Point(10, 46);
             this.newCounterAddr.Name = "newCounterAddr";
-            this.newCounterAddr.Size = new System.Drawing.Size(143, 15);
+            this.newCounterAddr.Size = new System.Drawing.Size(131, 13);
             this.newCounterAddr.TabIndex = 15;
             this.newCounterAddr.Text = "New Scene Counter Addr:";
             // 
             // controllerPortBox
             // 
-            this.controllerPortBox.Location = new System.Drawing.Point(448, 12);
+            this.controllerPortBox.Location = new System.Drawing.Point(384, 10);
             this.controllerPortBox.Maximum = new decimal(new int[] {
             4,
             0,
@@ -250,7 +252,7 @@ namespace SCC_Trainer
             0,
             0});
             this.controllerPortBox.Name = "controllerPortBox";
-            this.controllerPortBox.Size = new System.Drawing.Size(48, 23);
+            this.controllerPortBox.Size = new System.Drawing.Size(41, 20);
             this.controllerPortBox.TabIndex = 16;
             this.controllerPortBox.Value = new decimal(new int[] {
             2,
@@ -262,9 +264,9 @@ namespace SCC_Trainer
             // controllerLabel
             // 
             this.controllerLabel.AutoSize = true;
-            this.controllerLabel.Location = new System.Drawing.Point(374, 14);
+            this.controllerLabel.Location = new System.Drawing.Point(321, 12);
             this.controllerLabel.Name = "controllerLabel";
-            this.controllerLabel.Size = new System.Drawing.Size(70, 15);
+            this.controllerLabel.Size = new System.Drawing.Size(63, 13);
             this.controllerLabel.TabIndex = 17;
             this.controllerLabel.Text = "XInput Port:";
             this.controllerLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
@@ -272,43 +274,43 @@ namespace SCC_Trainer
             // sceneCounterLabel
             // 
             this.sceneCounterLabel.AutoSize = true;
-            this.sceneCounterLabel.Location = new System.Drawing.Point(12, 24);
+            this.sceneCounterLabel.Location = new System.Drawing.Point(10, 21);
             this.sceneCounterLabel.Name = "sceneCounterLabel";
-            this.sceneCounterLabel.Size = new System.Drawing.Size(85, 15);
+            this.sceneCounterLabel.Size = new System.Drawing.Size(80, 13);
             this.sceneCounterLabel.TabIndex = 18;
             this.sceneCounterLabel.Text = "Scene counter:";
             // 
             // zvelLabel
             // 
             this.zvelLabel.AutoSize = true;
-            this.zvelLabel.Location = new System.Drawing.Point(282, 128);
+            this.zvelLabel.Location = new System.Drawing.Point(242, 111);
             this.zvelLabel.Name = "zvelLabel";
-            this.zvelLabel.Size = new System.Drawing.Size(58, 15);
+            this.zvelLabel.Size = new System.Drawing.Size(54, 13);
             this.zvelLabel.TabIndex = 24;
             this.zvelLabel.Text = "Z Velocity";
             // 
             // yvelLabel
             // 
             this.yvelLabel.AutoSize = true;
-            this.yvelLabel.Location = new System.Drawing.Point(182, 128);
+            this.yvelLabel.Location = new System.Drawing.Point(156, 111);
             this.yvelLabel.Name = "yvelLabel";
-            this.yvelLabel.Size = new System.Drawing.Size(58, 15);
+            this.yvelLabel.Size = new System.Drawing.Size(54, 13);
             this.yvelLabel.TabIndex = 23;
             this.yvelLabel.Text = "Y Velocity";
             // 
             // xvelLabel
             // 
             this.xvelLabel.AutoSize = true;
-            this.xvelLabel.Location = new System.Drawing.Point(82, 128);
+            this.xvelLabel.Location = new System.Drawing.Point(70, 111);
             this.xvelLabel.Name = "xvelLabel";
-            this.xvelLabel.Size = new System.Drawing.Size(58, 15);
+            this.xvelLabel.Size = new System.Drawing.Size(54, 13);
             this.xvelLabel.TabIndex = 22;
             this.xvelLabel.Text = "X Velocity";
             // 
             // velZ
             // 
             this.velZ.DecimalPlaces = 4;
-            this.velZ.Location = new System.Drawing.Point(282, 146);
+            this.velZ.Location = new System.Drawing.Point(242, 127);
             this.velZ.Maximum = new decimal(new int[] {
             2147483647,
             0,
@@ -320,14 +322,14 @@ namespace SCC_Trainer
             0,
             -2147483648});
             this.velZ.Name = "velZ";
-            this.velZ.Size = new System.Drawing.Size(94, 23);
+            this.velZ.Size = new System.Drawing.Size(81, 20);
             this.velZ.TabIndex = 21;
             this.velZ.ValueChanged += new System.EventHandler(this.velZ_ValueChanged);
             // 
             // velY
             // 
             this.velY.DecimalPlaces = 4;
-            this.velY.Location = new System.Drawing.Point(182, 146);
+            this.velY.Location = new System.Drawing.Point(156, 127);
             this.velY.Maximum = new decimal(new int[] {
             2147483647,
             0,
@@ -339,14 +341,14 @@ namespace SCC_Trainer
             0,
             -2147483648});
             this.velY.Name = "velY";
-            this.velY.Size = new System.Drawing.Size(94, 23);
+            this.velY.Size = new System.Drawing.Size(81, 20);
             this.velY.TabIndex = 20;
             this.velY.ValueChanged += new System.EventHandler(this.velY_ValueChanged);
             // 
             // velX
             // 
             this.velX.DecimalPlaces = 4;
-            this.velX.Location = new System.Drawing.Point(82, 146);
+            this.velX.Location = new System.Drawing.Point(70, 127);
             this.velX.Maximum = new decimal(new int[] {
             2147483647,
             0,
@@ -358,15 +360,15 @@ namespace SCC_Trainer
             0,
             -2147483648});
             this.velX.Name = "velX";
-            this.velX.Size = new System.Drawing.Size(94, 23);
+            this.velX.Size = new System.Drawing.Size(81, 20);
             this.velX.TabIndex = 19;
             this.velX.ValueChanged += new System.EventHandler(this.velX_ValueChanged);
             // 
             // setButton
             // 
-            this.setButton.Location = new System.Drawing.Point(502, 90);
+            this.setButton.Location = new System.Drawing.Point(430, 78);
             this.setButton.Name = "setButton";
-            this.setButton.Size = new System.Drawing.Size(82, 25);
+            this.setButton.Size = new System.Drawing.Size(70, 22);
             this.setButton.TabIndex = 25;
             this.setButton.Text = "Set Warp";
             this.setButton.UseVisualStyleBackColor = true;
@@ -374,9 +376,9 @@ namespace SCC_Trainer
             // 
             // recallButton
             // 
-            this.recallButton.Location = new System.Drawing.Point(502, 123);
+            this.recallButton.Location = new System.Drawing.Point(430, 107);
             this.recallButton.Name = "recallButton";
-            this.recallButton.Size = new System.Drawing.Size(82, 25);
+            this.recallButton.Size = new System.Drawing.Size(70, 22);
             this.recallButton.TabIndex = 26;
             this.recallButton.Text = "Recall Warp";
             this.recallButton.UseVisualStyleBackColor = true;
@@ -385,15 +387,15 @@ namespace SCC_Trainer
             // numEnemiesLabel
             // 
             this.numEnemiesLabel.AutoSize = true;
-            this.numEnemiesLabel.Location = new System.Drawing.Point(382, 128);
+            this.numEnemiesLabel.Location = new System.Drawing.Point(327, 111);
             this.numEnemiesLabel.Name = "numEnemiesLabel";
-            this.numEnemiesLabel.Size = new System.Drawing.Size(74, 15);
+            this.numEnemiesLabel.Size = new System.Drawing.Size(68, 13);
             this.numEnemiesLabel.TabIndex = 28;
             this.numEnemiesLabel.Text = "Enemies Left";
             // 
             // numEnemies
             // 
-            this.numEnemies.Location = new System.Drawing.Point(382, 146);
+            this.numEnemies.Location = new System.Drawing.Point(327, 127);
             this.numEnemies.Maximum = new decimal(new int[] {
             2147483647,
             0,
@@ -405,15 +407,15 @@ namespace SCC_Trainer
             0,
             -2147483648});
             this.numEnemies.Name = "numEnemies";
-            this.numEnemies.Size = new System.Drawing.Size(94, 23);
+            this.numEnemies.Size = new System.Drawing.Size(81, 20);
             this.numEnemies.TabIndex = 29;
             this.numEnemies.ValueChanged += new System.EventHandler(this.numEnemies_ValueChanged);
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(596, 306);
+            this.ClientSize = new System.Drawing.Size(511, 265);
             this.Controls.Add(this.numEnemies);
             this.Controls.Add(this.numEnemiesLabel);
             this.Controls.Add(this.recallButton);
@@ -490,6 +492,8 @@ namespace SCC_Trainer
         private System.Windows.Forms.Button recallButton;
         private System.Windows.Forms.Label numEnemiesLabel;
         private System.Windows.Forms.NumericUpDown numEnemies;
+        private System.ComponentModel.BackgroundWorker backgroundWorker3;
+        private System.ComponentModel.BackgroundWorker backgroundWorker4;
     }
 }
 

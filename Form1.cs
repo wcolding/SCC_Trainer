@@ -1,6 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows.Forms;
+using System.IO;
+using System.IO.Pipes;
 using System.Configuration;
 using System.Collections.Specialized;
 
@@ -22,6 +24,14 @@ namespace SCC_Trainer
         private bool set_warp_pressed;
         private bool recall_warp_pressed;
         private Transform warpPoint;
+        private StreamReader inputStream;
+        private StreamWriter outputStream;
+
+        private NamedPipeServerStream toApp = new NamedPipeServerStream("toApp", PipeDirection.In);
+        private NamedPipeServerStream fromApp = new NamedPipeServerStream("fromApp", PipeDirection.Out);
+
+        private byte[] inputBuffer = new byte[API.PipeBufferSize];
+        private byte[] outputBuffer = new byte[API.PipeBufferSize];
 
         public Form1()
         {
@@ -41,6 +51,8 @@ namespace SCC_Trainer
 
             backgroundWorker1.DoWork += new DoWorkEventHandler(ReadGameState);
             backgroundWorker2.DoWork += new DoWorkEventHandler(CheckIfGameIsStillOpen);
+            backgroundWorker3.DoWork += new DoWorkEventHandler(WaitforPipeConnections);
+            backgroundWorker4.DoWork += new DoWorkEventHandler(ReadPipeThread);
         }
 
         private void GetTransform()
@@ -223,6 +235,9 @@ namespace SCC_Trainer
 
         private void hookButton_Click(object sender, EventArgs e)
         {
+            inputStream  = new StreamReader(toApp);
+            outputStream = new StreamWriter(fromApp);
+
             Memory.HookProgram("Conviction", ProcessMode.x86);
             if (Memory.GameIsRunning)
             {
@@ -231,12 +246,46 @@ namespace SCC_Trainer
                 conviction = new ConvictionGame((SCCVersion)gameVersionToggle.SelectedIndex);
                 backgroundWorker1.RunWorkerAsync();
                 backgroundWorker2.RunWorkerAsync();
+                backgroundWorker3.RunWorkerAsync();
             }
             else
             {
                 Memory.Close();
                 Log("Unable to open game.");
             }
+        }
+
+        private void WaitforPipeConnections(object sender, DoWorkEventArgs e)
+        {
+            toApp.WaitForConnection();
+            fromApp.WaitForConnection();
+            backgroundWorker4.RunWorkerAsync();
+        }
+
+        private void ReadPipeThread(object sender, DoWorkEventArgs e)
+        {
+            while (hooked)
+            {
+                ZeroInputBuffer();
+                inputStream.BaseStream.Read(inputBuffer, 0, API.PipeBufferSize);
+
+                MessageType type = (MessageType)inputBuffer[0];
+
+                switch (type)
+                {
+                    case MessageType.Success:
+                        Log("DLL says hi");
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        private void ZeroInputBuffer()
+        {
+            for (int i = 0; i < API.PipeBufferSize; i++)
+                inputBuffer[i] = 0;
         }
 
         private void DeactivateForm()

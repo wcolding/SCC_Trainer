@@ -2,6 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Runtime.ConstrainedExecution;
 using System.Security;
+using System.Text;
 
 namespace SCC_Trainer
 {
@@ -90,6 +91,48 @@ namespace SCC_Trainer
         [SuppressUnmanagedCodeSecurity]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool CloseHandle(IntPtr hObject);
+
+        [DllImport("kernel32.dll")]
+        static extern IntPtr CreateRemoteThread(IntPtr hProcess, IntPtr lpThreadAttributes, uint dwStackSize, IntPtr lpStartAddress, IntPtr lpParameter, uint dwCreationFlags, out IntPtr lpThreadId);
+
+        [DllImport("kernel32.dll", CharSet = CharSet.Ansi, ExactSpelling = true, SetLastError = true)]
+        static extern IntPtr GetProcAddress(IntPtr hModule, string procName);
+        
+        [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
+        public static extern IntPtr GetModuleHandle(string lpModuleName);
+
+        [Flags]
+        public enum AllocationType
+        {
+            Commit = 0x1000,
+            Reserve = 0x2000,
+            Decommit = 0x4000,
+            Release = 0x8000,
+            Reset = 0x80000,
+            Physical = 0x400000,
+            TopDown = 0x100000,
+            WriteWatch = 0x200000,
+            LargePages = 0x20000000
+        }
+
+        [Flags]
+        public enum MemoryProtection
+        {
+            Execute = 0x10,
+            ExecuteRead = 0x20,
+            ExecuteReadWrite = 0x40,
+            ExecuteWriteCopy = 0x80,
+            NoAccess = 0x01,
+            ReadOnly = 0x02,
+            ReadWrite = 0x04,
+            WriteCopy = 0x08,
+            GuardModifierflag = 0x100,
+            NoCacheModifierflag = 0x200,
+            WriteCombineModifierflag = 0x400
+        }
+        
+        [DllImport("kernel32.dll", SetLastError = true, ExactSpelling = true)]
+        static extern IntPtr VirtualAllocEx(IntPtr hProcess, IntPtr lpAddress, uint dwSize, AllocationType flAllocationType, MemoryProtection flProtect);
         #endregion
 
         public static ulong baseAddress = 0;
@@ -127,6 +170,31 @@ namespace SCC_Trainer
                 return -3;
 
             handle = proc;
+
+            // DLL Injection
+            IntPtr addr = GetProcAddress(GetModuleHandle("kernel32.dll"), "LoadLibraryA");
+
+            if (addr != IntPtr.Zero)
+            {
+                //Program.Log("LoadLibraryA found at {0:X8}", (int)addr);
+
+                // Just Uplay for now
+                IntPtr arg = VirtualAllocEx(handle, IntPtr.Zero, (uint)Program.uplayDLL.Length, AllocationType.Reserve | AllocationType.Commit, MemoryProtection.ReadWrite);
+
+                if (arg != IntPtr.Zero)
+                {
+                    IntPtr output;
+                    bool success = WriteProcessMemory(handle, arg, Encoding.ASCII.GetBytes(Program.uplayDLL), Program.uplayDLL.Length, out output);
+                    
+                    if (success)
+                    {
+                        IntPtr threadID = CreateRemoteThread(handle, IntPtr.Zero, 0, addr, arg, 0, out output);
+
+                        if (threadID != IntPtr.Zero)
+                            Program.Log("DLL Injected successfully at {0:X8}", (int)threadID);
+                    }
+                }
+            }
 
             return 0;
         }
