@@ -305,7 +305,7 @@ namespace SCC_Trainer
             hookButton.Enabled = false;
         }        
 
-        private void Log(string s, params object?[] args)
+        private void Log(string s, params object[] args)
         {
             Invoke(new Action(() =>
             {

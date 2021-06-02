@@ -188,16 +188,16 @@ namespace SCC_Trainer
                 switch (type)
                 {
                     case SupportedType.Float:
-                        t = BitConverter.ToSingle(buffer);
+                        t = BitConverter.ToSingle(buffer, 0);
                         break;
                     case SupportedType.u16:
-                        t = BitConverter.ToUInt16(buffer);
+                        t = BitConverter.ToUInt16(buffer, 0);
                         break;
                     case SupportedType.s32:
-                        t = BitConverter.ToInt32(buffer);
+                        t = BitConverter.ToInt32(buffer, 0);
                         break;
                     case SupportedType.u32:
-                        t = BitConverter.ToUInt32(buffer);
+                        t = BitConverter.ToUInt32(buffer, 0);
                         break;
                     default:
                         t = 0;
