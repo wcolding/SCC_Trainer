@@ -173,6 +173,32 @@ namespace SCC_Trainer
             velz = new AddressObject<float>();
             velz.address = objectAddr + 0x1C4;
         }
+
+        public PlayerTransform(ulong playerObjectAddr)
+        {
+            ulong objectAddr = playerObjectAddr;
+
+            posx = new AddressObject<float>();
+            posx.address = objectAddr + 0x94;
+
+            posy = new AddressObject<float>();
+            posy.address = objectAddr + 0x9C;
+
+            posz = new AddressObject<float>();
+            posz.address = objectAddr + 0x98;
+
+            roty = new AddressObject<ushort>();
+            roty.address = objectAddr + 0xA4;
+
+            velx = new AddressObject<float>();
+            velx.address = objectAddr + 0x1C0;
+
+            vely = new AddressObject<float>();
+            vely.address = objectAddr + 0x1C8;
+
+            velz = new AddressObject<float>();
+            velz.address = objectAddr + 0x1C4;
+        }
     }
 
     public struct Transform

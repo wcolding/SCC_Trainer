@@ -15,6 +15,6 @@ typedef unsigned __int8 u8;
 //   'type' is the header
 //   'data' is the actual information being passed
 //   'len' is the length of data to copy
-u8* BuildMsg(u8 type, u8* data, int len);
+u8* BuildMsg(u8 type, void* data, int len);
 
 void ParseMsg(u8* msg);

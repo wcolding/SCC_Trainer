@@ -276,6 +276,11 @@ namespace SCC_Trainer
                     case MessageType.Success:
                         Log("DLL says hi");
                         break;
+                    case MessageType.Esam:
+                        int newEsam = BitConverter.ToInt32(inputBuffer, 1);
+                        Log("ESam address changed to 0x{0:X8}", newEsam);
+                        conviction.player.transform = new PlayerTransform((ulong)newEsam);
+                        break;
                     default:
                         break;
                 }

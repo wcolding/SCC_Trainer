@@ -2,7 +2,7 @@
 #include <stdlib.h> 
 #include <cstring>
 
-u8* BuildMsg(u8 type, u8* data, int len)
+u8* BuildMsg(u8 type, void* data, int len)
 {
 	u8* temp = new u8[len + 1];
 	temp[0] = type;

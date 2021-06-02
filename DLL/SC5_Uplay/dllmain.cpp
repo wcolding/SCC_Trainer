@@ -5,6 +5,47 @@
 
 #define SendClient(a,b,c) WriteFile(outPipe, BuildMsg(a,b,c), c+1, bytesIO, 0);
 
+bool Hook(void* original, void* detour, int len)
+{
+    if (len < 5)
+        return false;
+
+    DWORD defaultProtection;
+    VirtualProtect(original, len, PAGE_EXECUTE_READWRITE, &defaultProtection);
+    memset(original, 0x90, len);
+
+    DWORD jmpOffset = (DWORD)detour - (DWORD)original - 5;
+    *(BYTE*)original = 0xE9;
+    *(DWORD*)((DWORD)original + 1) = jmpOffset;
+
+    DWORD output;
+    VirtualProtect(original, len, defaultProtection, &output);
+
+    return true;
+}
+
+DWORD BaseModule = (DWORD)GetModuleHandleA("Conviction_game.exe");
+
+/////////////////
+// ESAM SECTION
+DWORD ESam = 0;
+DWORD ESam_New = 0;
+DWORD ESamHookStart  = BaseModule + 0x39B25F;
+DWORD ESamHookReturn = BaseModule + 0x39B267;
+
+void __declspec(naked) GetESam()
+{
+    __asm 
+    {
+        mov [ESam_New], eax
+
+        // Original code
+        movss xmm0, [eax+0x0000009C]
+        jmp [ESamHookReturn]
+    }
+}
+//////////////////
+
 DWORD WINAPI TrainerThread(LPVOID lpParam)
 {
     //MessageBox(NULL, (LPCTSTR)"This is injected!", (LPCTSTR)"INJECTION", MB_OK);
@@ -23,11 +64,21 @@ DWORD WINAPI TrainerThread(LPVOID lpParam)
             break;
     }
 
+    SendClient(MSG_SUCCESS, nullptr, 0);
 
+    // Assign function hooks
+    Hook((void*)ESamHookStart, GetESam, 8);
+
+    // Main loop
     while (true)
     {
-        SendClient(MSG_SUCCESS, nullptr, 0);
-        Sleep(1000);
+        if (ESam != ESam_New)
+        {
+            ESam = ESam_New;
+            SendClient(UPDATE_ESAM, &ESam, 4);
+        }
+
+        Sleep(10);
     }
 
     return 0;
