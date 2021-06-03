@@ -57,13 +57,13 @@ namespace SCC_Trainer
 
         private void GetTransform()
         {
-            posX.Value = (decimal)conviction.player.transform.PosX;
-            posY.Value = (decimal)conviction.player.transform.PosY;
-            posZ.Value = (decimal)conviction.player.transform.PosZ;
-            rotY.Value = conviction.player.transform.RotY;
-            velX.Value = (decimal)conviction.player.transform.VelX;
-            velY.Value = (decimal)conviction.player.transform.VelY;
-            velZ.Value = (decimal)conviction.player.transform.VelZ;
+            posX.Value = (decimal)conviction.p1.Transform.PosX;
+            posY.Value = (decimal)conviction.p1.Transform.PosY;
+            posZ.Value = (decimal)conviction.p1.Transform.PosZ;
+            rotY.Value = conviction.p1.Transform.RotY;
+            velX.Value = (decimal)conviction.p1.Transform.VelX;
+            velY.Value = (decimal)conviction.p1.Transform.VelY;
+            velZ.Value = (decimal)conviction.p1.Transform.VelZ;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -74,43 +74,43 @@ namespace SCC_Trainer
         private void posX_ValueChanged(object sender, EventArgs e)
         {
             if (hooked)
-                conviction.player.transform.PosX = (float)posX.Value;
+                conviction.p1.Transform.PosX = (float)posX.Value;
         }
 
         private void posY_ValueChanged(object sender, EventArgs e)
         {
             if (hooked)
-                conviction.player.transform.PosY = (float)posY.Value;
+                conviction.p1.Transform.PosY = (float)posY.Value;
         }
 
         private void posZ_ValueChanged(object sender, EventArgs e)
         {
             if (hooked)
-                conviction.player.transform.PosZ = (float)posZ.Value;
+                conviction.p1.Transform.PosZ = (float)posZ.Value;
         }
 
         private void rotY_ValueChanged(object sender, EventArgs e)
         {
             if (hooked)
-                conviction.player.transform.RotY = (ushort)rotY.Value;
+                conviction.p1.Transform.RotY = (ushort)rotY.Value;
         }
 
         private void velX_ValueChanged(object sender, EventArgs e)
         {
             if (hooked)
-                conviction.player.transform.VelX = (float)velX.Value;
+                conviction.p1.Transform.VelX = (float)velX.Value;
         }
 
         private void velY_ValueChanged(object sender, EventArgs e)
         {
             if (hooked)
-                conviction.player.transform.VelY = (float)velY.Value;
+                conviction.p1.Transform.VelY = (float)velY.Value;
         }
 
         private void velZ_ValueChanged(object sender, EventArgs e)
         {
             if (hooked)
-                conviction.player.transform.VelZ = (float)velZ.Value;
+                conviction.p1.Transform.VelZ = (float)velZ.Value;
         }
 
         private void CheckIfGameIsStillOpen(object sender, DoWorkEventArgs e)
@@ -136,12 +136,12 @@ namespace SCC_Trainer
         {
             while (hooked)
             {
-                Invoke(new Action(() =>
-                {
-                    conviction.CheckIfReloaded();
-                    oldCounterAddr.Text = String.Format("Old Scene Counter Addr: {0:X8}", conviction.oldSceneCounterAddr);
-                    newCounterAddr.Text = String.Format("New Scene Counter Addr: {0:X8}", conviction.sceneCounterAddr);
-                }));
+                //Invoke(new Action(() =>
+                //{
+                //    conviction.CheckIfReloaded();
+                //    oldCounterAddr.Text = String.Format("Old Scene Counter Addr: {0:X8}", conviction.oldSceneCounterAddr);
+                //    newCounterAddr.Text = String.Format("Scene Counter Addr: {0:X8}", conviction.p1.SceneCounter);
+                //}));
 
                 mapName = conviction.MapName;
 
@@ -152,7 +152,7 @@ namespace SCC_Trainer
                         curMapLabel.Text = "Current Map: " + mapName;
                         GetTransform();
                         numEnemies.Value = (decimal)conviction.EnemiesLeft;
-                        sceneCounterLabel.Text = String.Format("Scene Counter Addr: {0}", conviction.SceneCounter);
+                        sceneCounterLabel.Text = String.Format("Scene Counter Addr: {0}", conviction.p1.SceneCounter);
                     }));
 
                     XInput.XInputGetState(controllerIndex, ref xInputState);
@@ -165,18 +165,18 @@ namespace SCC_Trainer
                         movementMultiplier *= 2f;
 
                     if (XInput.isButtonDown(XInput.Button.LB, xInputState))
-                        conviction.player.transform.PosY -= movementSpeed * movementMultiplier;
+                        conviction.p1.Transform.PosY -= movementSpeed * movementMultiplier;
                     if (XInput.isButtonDown(XInput.Button.RB, xInputState))
-                        conviction.player.transform.PosY += movementSpeed * movementMultiplier;
+                        conviction.p1.Transform.PosY += movementSpeed * movementMultiplier;
 
                     if (XInput.isButtonDown(XInput.Button.DPad_Left, xInputState))
-                        conviction.player.transform.PosX -= movementSpeed * movementMultiplier;
+                        conviction.p1.Transform.PosX -= movementSpeed * movementMultiplier;
                     if (XInput.isButtonDown(XInput.Button.DPad_Right, xInputState))
-                        conviction.player.transform.PosX += movementSpeed * movementMultiplier;
+                        conviction.p1.Transform.PosX += movementSpeed * movementMultiplier;
                     if (XInput.isButtonDown(XInput.Button.DPad_Up, xInputState))
-                        conviction.player.transform.PosZ -= movementSpeed * movementMultiplier;
+                        conviction.p1.Transform.PosZ -= movementSpeed * movementMultiplier;
                     if (XInput.isButtonDown(XInput.Button.DPad_Down, xInputState))
-                        conviction.player.transform.PosZ += movementSpeed * movementMultiplier;
+                        conviction.p1.Transform.PosZ += movementSpeed * movementMultiplier;
 
                     if (XInput.isButtonDown(XInput.Button.A, xInputState))
                     {
@@ -213,10 +213,10 @@ namespace SCC_Trainer
         {
             if (hooked)
             {
-                warpPoint.PosX = conviction.player.transform.PosX;
-                warpPoint.PosY = conviction.player.transform.PosY;
-                warpPoint.PosZ = conviction.player.transform.PosZ;
-                warpPoint.RotY = conviction.player.transform.RotY;
+                warpPoint.PosX = conviction.p1.Transform.PosX;
+                warpPoint.PosY = conviction.p1.Transform.PosY;
+                warpPoint.PosZ = conviction.p1.Transform.PosZ;
+                warpPoint.RotY = conviction.p1.Transform.RotY;
                 Log("Warp point set ({0},{1},{2})", warpPoint.PosX, warpPoint.PosY, warpPoint.PosZ);
             }
         }
@@ -225,10 +225,10 @@ namespace SCC_Trainer
         {
             if (hooked)
             {
-                conviction.player.transform.PosX = warpPoint.PosX;
-                conviction.player.transform.PosY = warpPoint.PosY;
-                conviction.player.transform.PosZ = warpPoint.PosZ;
-                conviction.player.transform.RotY = warpPoint.RotY;
+                conviction.p1.Transform.PosX = warpPoint.PosX;
+                conviction.p1.Transform.PosY = warpPoint.PosY;
+                conviction.p1.Transform.PosZ = warpPoint.PosZ;
+                conviction.p1.Transform.RotY = warpPoint.RotY;
                 Log("Warp point recalled ({0},{1},{2})", warpPoint.PosX, warpPoint.PosY, warpPoint.PosZ);
             }
         }
@@ -279,7 +279,7 @@ namespace SCC_Trainer
                     case MessageType.Esam:
                         int newEsam = BitConverter.ToInt32(inputBuffer, 1);
                         Log("ESam address changed to 0x{0:X8}", newEsam);
-                        conviction.player.transform = new PlayerTransform((ulong)newEsam);
+                        conviction.p1.Address = (ulong)newEsam;
                         break;
                     default:
                         break;

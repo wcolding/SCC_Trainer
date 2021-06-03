@@ -46,6 +46,24 @@ void __declspec(naked) GetESam()
 }
 //////////////////
 
+/////////////////
+// GHOSTSTATE SECTION
+// IDA: char __thiscall ToggleGhostState_(_BYTE *this, char a2, int a3, int a4, int a5, int a6, int a7)
+DWORD GhoststateHookStart = BaseModule + 0x3ECABE;
+typedef char(__fastcall* _SetGhostState)(void* pThis, char flags, int a3, int a4, int a5, float a6, int a7);
+_SetGhostState SetGhostState = (_SetGhostState)(GhoststateHookStart);
+
+void ToggleGhostState()
+{
+    char flags = 1;
+    //char* ptr = 
+    char curFlags = *(char*)(ESam + 0x53);
+    if (curFlags == 1)
+        flags = 7;
+    SetGhostState((void*)(ESam), flags, 0, 0, 0, 1.00, 0);
+}
+//////////////////
+
 DWORD WINAPI TrainerThread(LPVOID lpParam)
 {
     //MessageBox(NULL, (LPCTSTR)"This is injected!", (LPCTSTR)"INJECTION", MB_OK);
@@ -77,6 +95,10 @@ DWORD WINAPI TrainerThread(LPVOID lpParam)
             ESam = ESam_New;
             SendClient(UPDATE_ESAM, &ESam, 4);
         }
+
+        if (GetAsyncKeyState(VK_NUMPAD0) & 1)
+            ToggleGhostState();
+
 
         Sleep(10);
     }

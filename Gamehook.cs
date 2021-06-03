@@ -177,7 +177,7 @@ namespace SCC_Trainer
             if (addr != IntPtr.Zero)
             {
                 //Program.Log("LoadLibraryA found at {0:X8}", (int)addr);
-
+                
                 // Just Uplay for now
                 IntPtr arg = VirtualAllocEx(handle, IntPtr.Zero, (uint)Program.uplayDLL.Length, AllocationType.Reserve | AllocationType.Commit, MemoryProtection.ReadWrite);
 

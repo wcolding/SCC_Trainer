@@ -6,6 +6,9 @@ namespace SCC_Trainer
     public class ConvictionGame
     {
         public PlayerData player;
+
+        public ESam p1;
+
         public string MapName
         {
             get
@@ -19,26 +22,26 @@ namespace SCC_Trainer
             }
         }
 
-        private SCCVersion version;
+        public static SCCVersion version;
 
         private IntPtr mapNamePtr;
 
         private byte[] buffer = new byte[64];
         private IntPtr numBytesRead;
 
-        public ulong oldSceneCounterAddr;
-        public ulong sceneCounterAddr;
+        //public ulong oldSceneCounterAddr;
+        //public ulong sceneCounterAddr;
 
-        public int SceneCounter
-        {
-            get 
-            {
-                cachedSceneCounter = (int)sceneCounter.Value;
-                return cachedSceneCounter; 
-            }
-        }
-        private AddressObject<int> sceneCounter;
-        private int cachedSceneCounter = 0;
+        //public int SceneCounter
+        //{
+        //    get 
+        //    {
+        //        cachedSceneCounter = (int)sceneCounter.Value;
+        //        return cachedSceneCounter; 
+        //    }
+        //}
+        //private AddressObject<int> sceneCounter;
+        //private int cachedSceneCounter = 0;
 
         public int EnemiesLeft
         {
@@ -54,16 +57,17 @@ namespace SCC_Trainer
                 throw new Exception("Must hook game before instantiating ConvictionGame object!");
 
             version = ver;
-            sceneCounterAddr = Memory.GetAddressFromPointer(0xFCB49C, 0x18, 0x28);
-            oldSceneCounterAddr = sceneCounterAddr;
-            sceneCounter = new AddressObject<int>(sceneCounterAddr);
+            p1 = new ESam();
+            //sceneCounterAddr = Memory.GetAddressFromPointer(0xFCB49C, 0x18, 0x28);
+            //oldSceneCounterAddr = sceneCounterAddr;
+            //sceneCounter = new AddressObject<int>(sceneCounterAddr);
             Initialize();
             Program.Log("Program hooked! Version: {0}", version.ToString());
         }
 
         public void Initialize()
         {
-            player = new PlayerData();
+            //player = new PlayerData();
             enemiesLeft = new AddressObject<int>();
             enemiesLeft.address = Memory.GetAddressFromPointer(0xFCBCB0, 0x8, 0x40, 0x5DC, 0x434, 0x450);
 
@@ -89,15 +93,15 @@ namespace SCC_Trainer
 
         public void CheckIfReloaded()
         {
-            sceneCounterAddr = Memory.GetAddressFromPointer(0xFCB49C, 0x18, 0x28);
-            if (sceneCounterAddr != oldSceneCounterAddr)
-            {
-                Initialize();
-                sceneCounter = new AddressObject<int>(sceneCounterAddr);
-                if (cachedSceneCounter > 0)
-                    Program.Log("Scene reloaded - previous counter at {0}", cachedSceneCounter);
-                oldSceneCounterAddr = sceneCounterAddr;
-            }
+            //sceneCounterAddr = Memory.GetAddressFromPointer(0xFCB49C, 0x18, 0x28);
+            //if (sceneCounterAddr != oldSceneCounterAddr)
+            //{
+            //    Initialize();
+            //    sceneCounter = new AddressObject<int>(sceneCounterAddr);
+            //    if (cachedSceneCounter > 0)
+            //        Program.Log("Scene reloaded - previous counter at {0}", cachedSceneCounter);
+            //    oldSceneCounterAddr = sceneCounterAddr;
+            //}
         }
     }
 
@@ -217,6 +221,105 @@ namespace SCC_Trainer
         {
             transform = new PlayerTransform(0xFCB49C, 0x18, 0x0);
         }
+    }
+
+    public class ESam
+    {
+        private static AddressObject<int> sceneCounter = new AddressObject<int>();
+        private static AddressObject<int> bbid = new AddressObject<int>();
+        private static AddressObject<float> posX = new AddressObject<float>();
+        private static AddressObject<float> posZ = new AddressObject<float>();
+        private static AddressObject<float> posY = new AddressObject<float>();
+        private static AddressObject<ushort> rotY = new AddressObject<ushort>();
+        private static AddressObject<float> velX = new AddressObject<float>();
+        private static AddressObject<float> velZ = new AddressObject<float>();
+        private static AddressObject<float> velY = new AddressObject<float>();
+
+        private ulong address = 0;
+
+        // Base address of the structure in memory
+        public ulong Address
+        {
+            get { return address; }
+
+            // All AddressObjects need to be updated when this is set
+            set
+            {
+                address              = value;
+                sceneCounter.address = address + 0x28;
+                bbid.address         = address + 0x40;
+                posX.address         = address + 0x94;
+                posZ.address         = address + 0x98;
+                posY.address         = address + 0x9C;
+                rotY.address         = address + 0xA4;
+                velX.address         = address + 0x1C0;
+                velZ.address         = address + 0x1C4;
+                velY.address         = address + 0x1C8;
+            }
+        }
+
+        // Frames since level started
+        public int SceneCounter
+        {
+            get { return (int)sceneCounter.Value; }
+            set { sceneCounter.Value = value; }
+        }
+
+        // Currently displayed objective
+        public int BlackboxID
+        {
+            get { return (int)bbid.Value; }
+            set { bbid.Value = value; }
+        }
+
+        // Positional Data
+        public struct TransformData
+        {
+            public float PosX
+            {
+                get { return (float)posX.Value; }
+                set { posX.Value = value; }
+            }
+
+            public float PosZ
+            {
+                get { return (float)posZ.Value; }
+                set { posZ.Value = value; }
+            }
+
+            public float PosY
+            {
+                get { return (float)posY.Value; }
+                set { posY.Value = value; }
+            }
+
+            public ushort RotY
+            {
+                get { return (ushort)rotY.Value; }
+                set { rotY.Value = value; }
+            }
+
+            public float VelX
+            {
+                get { return (float)velX.Value; }
+                set { velX.Value = value; }
+            }
+
+            public float VelZ
+            {
+                get { return (float)velZ.Value; }
+                set { velZ.Value = value; }
+            }
+
+            public float VelY
+            {
+                get { return (float)velY.Value; }
+                set { velY.Value = value; }
+            }
+        }
+
+        public TransformData Transform = new TransformData();
+        
     }
 
     public enum SCCVersion
